@@ -48,4 +48,12 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="RabbitMQ\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
+	</ItemGroup>
+
 </Project>
