@@ -1,5 +1,4 @@
-﻿using RabbitMQ;
-using RabbitMQ.Client;
+﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 
@@ -9,20 +8,19 @@ namespace NotificationReceiverLibrary
 	{
 		private string hostName;
 		private ConnectionFactory factory;
-		private List<string> queueNames;
+		public List<string> queueNames = new List<string>();
+		public EventingBasicConsumer consumer;
 		private IConnection connection;
 		private IModel channel;
 		public Receiver(string Host = "localhost")
 		{
-			if (!Host.Equals("localhost"))
-				hostName = Host;
-
+			hostName = Host;
 		}
 		public void OpenConnection()
 		{
-			var factory = new ConnectionFactory() { HostName = hostName };
-			var connection = factory.CreateConnection();
-			var channel = connection.CreateModel();
+			factory = new ConnectionFactory() { HostName = hostName };
+			connection = factory.CreateConnection();
+			channel = connection.CreateModel();
 		}
 
 		public void OpenQueue(string queueName, bool durable = true, bool exclusive = false, bool autoDelete = false, IDictionary<string, object> arguments = null)
@@ -36,7 +34,7 @@ namespace NotificationReceiverLibrary
 								autoDelete: autoDelete,
 								arguments: arguments);
 		}
-		public void DeclareExchange(string exchange, string routingKey, string exchangeType)
+		public void DeclareExchange(string exchange, string exchangeType)
 		{
 			channel.ExchangeDeclare(exchange: exchange, type: exchangeType);
 		}
@@ -47,26 +45,28 @@ namespace NotificationReceiverLibrary
 							  exchange: exchange,
 							  routingKey: routingKey);
 
-			queueNames.Append(queueName);
+			queueNames.Add(queueName);
 		}
-		public void Recevier(string queueName, bool autoAck = true)
+		public void Receiving()
 		{
 
 			Console.WriteLine(" Wating for message");
 
-			var consumer = new EventingBasicConsumer(channel);
+			consumer = new EventingBasicConsumer(channel);
+
 			consumer.Received += (model, ea) =>
 			{
 				var body = ea.Body.ToArray();
-				var message = Encoding.UTF8.GetString(body);
+				string message = Encoding.UTF8.GetString(body);
 				Console.WriteLine(message);
 			};
+		}
+
+		public void Consume(string queueName, bool autoAck = true)
+		{
 			channel.BasicConsume(queue: queueName,
 								autoAck: autoAck,
 								consumer: consumer);
-
-			Console.WriteLine("Press Enter to exit");
-			Console.ReadLine();
 		}
 		public void DisposeConnection()
 		{
@@ -91,6 +91,12 @@ namespace NotificationReceiverLibrary
 
 			channel.QueueDelete(queue: queueName);
 		}
+		public void DisposeExchange(string exchange)
+		{
+			if (factory == null || connection == null || channel == null)
+				return;
 
+			channel.ExchangeDelete(exchange: exchange);
+		}
 	}
 }

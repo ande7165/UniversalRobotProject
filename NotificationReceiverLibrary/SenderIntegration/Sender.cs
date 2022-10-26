@@ -13,8 +13,7 @@ namespace SenderIntegration
 		private IModel channel;
 		public Sender(string Host = "localhost")
 		{
-			if(!Host.Equals("localhost"))
-				hostName = Host;
+			hostName = Host;
 
 		}
 
