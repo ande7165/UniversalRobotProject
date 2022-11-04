@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\NotificationReceiverLibrary\NotificationReceiverLibrary\NotificationReceiverLibrary.csproj" />
+    <ProjectReference Include="..\..\NotificationReceiverLibrary\SenderIntegration\SenderIntegration.csproj" />
   </ItemGroup>
 
 </Project>

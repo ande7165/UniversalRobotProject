@@ -12,6 +12,7 @@ namespace NotificationReceiverLibrary
 		public EventingBasicConsumer consumer;
 		private IConnection connection;
 		private IModel channel;
+		public string message = "";
 		public Receiver(string Host = "localhost")
 		{
 			hostName = Host;
@@ -54,11 +55,13 @@ namespace NotificationReceiverLibrary
 
 			consumer = new EventingBasicConsumer(channel);
 
+
 			consumer.Received += (model, ea) =>
 			{
 				var body = ea.Body.ToArray();
-				string message = Encoding.UTF8.GetString(body);
+				message = Encoding.UTF8.GetString(body);
 				Console.WriteLine(message);
+				
 			};
 		}
 

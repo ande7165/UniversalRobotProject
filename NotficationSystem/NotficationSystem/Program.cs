@@ -1,5 +1,6 @@
 ﻿using NotificationReceiverLibrary;
 using RabbitMQ.Client;
+using SenderIntegration;
 using System;
 using System.Text;
 
@@ -17,13 +18,41 @@ string message = "No Message";
 	receiver.BindQueue("URStatus", "UR.Robot.Status");
 
 	qname = receiver.queueNames.First();
+
 	//while(running)
+
 	receiver.Receiving();
-	
-	receiver.Consume(qname);
+
+receiver.message = "Test";
+Sender sender = new Sender();
+
+sender.OpenConnection();
+sender.OpenQueue("RandomQueue");
+
+if (!string.IsNullOrWhiteSpace(receiver.message))
+{
+	//string? key = console.readkey().tostring();
+	//if (key == "esc")
+	//{
+	//	running = false;
+	//	sender.disposequeue("randomqueue");
+	//	sender.disposechannel();
+	//	sender.disposeconnection();
+	//}
+	//else
+	sender.SendMessage(receiver.message, "UR.Robot.Status.NotficationSys", "SubscriberExchange");
+}
+
+
+
+
+
+receiver.Consume(qname);
 
 Console.WriteLine("Something");
 Console.ReadLine();
+
+
 //}
 //finally
 //{
