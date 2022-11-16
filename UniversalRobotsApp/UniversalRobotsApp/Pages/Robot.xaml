@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ViewModel="clr-namespace:UniversalRobotsApp.ViewModel"
+             x:Class="UniversalRobotsApp.Pages.Robot"
+             Title="Robot">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="2*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+			
+		<Label 
+            Text="{Binding SelectedRobot.Id}" Grid.Row="1" Grid.Column="0"/>
+		<Label 
+            Text="{Binding SelectedRobot.Name}" Grid.Row="1" Grid.Column="1"/>
+		<Label 
+            Text="{Binding SelectedRobot.Description}"
+			Grid.Row="2"
+			Grid.Column="1"/>
+		<Image Source="{Binding SelectedRobot.Image}" Grid.Row="0" Grid.ColumnSpan="2" Aspect="AspectFit"/>
+	</Grid>
+</ContentPage>
