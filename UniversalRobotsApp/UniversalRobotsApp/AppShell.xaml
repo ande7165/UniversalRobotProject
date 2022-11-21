@@ -4,11 +4,20 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:UniversalRobotsApp"
+	xmlns:pages="clr-namespace:UniversalRobotsApp.Pages"
     Shell.FlyoutBehavior="Disabled">
-
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+	<TabBar>
+		<ShellContent
+			Icon="Resource/Image/home_icon.svg"
+			ContentTemplate="{DataTemplate pages:MainPage}"
+			Route="MainPage" />
+		<ShellContent
+			Icon="Resource/Image/robot_arm.svg"
+			ContentTemplate="{DataTemplate pages:Robots}"
+			Route="Robots"/>
+		<ShellContent 
+			Icon="Resource/Image/settings_icon.svg"
+			ContentTemplate="{DataTemplate pages:Settings}"
+			Route="Settings"/>
+	</TabBar>
 </Shell>

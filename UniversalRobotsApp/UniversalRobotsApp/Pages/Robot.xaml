@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ViewModel="clr-namespace:UniversalRobotsApp.ViewModel"
+             xmlns:local="clr-namespace:UniversalRobotsApp"
+             x:Class="UniversalRobotsApp.Pages.Robot"
+             Title="Robot">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<local:StatusColorConverter x:Key="ColorConverter" />
+		</ResourceDictionary>
+	</ContentPage.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="2*"/>
+			<RowDefinition Height="0.3*"/>
+			<RowDefinition Height="0.3*"/>
+			<RowDefinition Height="0.3*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="2*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		<Label
+			Text="Robot ID:" Grid.Row="1" Grid.Column="0"
+			/>
+		<Label
+			Text="Robot Name:" Grid.Row="2" Grid.Column="0"
+			/>
+		<Label
+			Text="Description:" Grid.Row="3"
+			/>
+		<Image Source="{Binding SelectedRobot.Image}" Grid.Row="0" Grid.ColumnSpan="2" Aspect="AspectFit"/>
+		<Label 
+            Text="{Binding SelectedRobot.Id}" Grid.Row="1" Grid.Column="1"/>
+		<Label 
+            Text="{Binding SelectedRobot.Name}" Grid.Row="2" Grid.Column="1"/>
+		<Label 
+            Text="{Binding SelectedRobot.Description}"
+			VerticalOptions="Start"
+			HorizontalOptions="Start"
+			Grid.Row="4"
+			Grid.ColumnSpan="2"/>
+
+
+		<ListView 
+			Grid.Row="5"  
+			Grid.ColumnSpan="2"
+			ItemsSource="{Binding SelectedRobot.Notifications}"
+			ItemSelected="OnItemSelected"
+			x:Name="NotificationsList"
+			>
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<ViewCell>
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="2*"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="0.4*"/>
+							</Grid.ColumnDefinitions>
+							<Label Text="{Binding Title}" Grid.Row="0" Grid.Column="0"/>
+							<Label Text="{Binding NotificationTimeStamp}" Grid.Row="0" Grid.Column="1"/>
+							<Ellipse
+							Grid.Column="2"
+							WidthRequest="30"
+							HeightRequest="30"
+							HorizontalOptions="End"
+							Margin="0,0,10,0"
+							Fill="{Binding NotificationStatus, Converter={StaticResource ColorConverter}}"
+							/>
+						</Grid>
+					</ViewCell>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+	</Grid>
+</ContentPage>
