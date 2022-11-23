@@ -7,22 +7,27 @@ namespace UniversalRobotsApp.Pages;
 public partial class MainPage : ContentPage
 {
 	public IForegroundService Service { get; set; }
-	public MainPage(/*IForegroundService service*/)
+	public MainPage()
 	{
 
 		InitializeComponent();
 
-		Service = new NotificationService();//service;
+#if ANDROID
+		Service = new NotificationService();
 
+		Service.Start();
+#endif
 	}
 
 	private void StartService(object sender, EventArgs e)
 	{
-		Service.Start();
+		if(Service != null)
+			Service.Start();
 	}
 
 	private void EndService(object sender, EventArgs e)
 	{
-		Service.Stop();
+		if( Service != null )
+			Service.Stop();
 	}
 }

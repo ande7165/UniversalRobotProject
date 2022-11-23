@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockUpMyUR", "MockUpMyUR\Mo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SenderIntegration", "..\NotificationReceiverLibrary\SenderIntegration\SenderIntegration.csproj", "{120530E1-BC52-4D4E-997B-3477964AB544}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "URModels", "..\URModels\URModels\URModels.csproj", "{A3A60AFC-181D-4EBA-93B7-67F7587EBA10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{120530E1-BC52-4D4E-997B-3477964AB544}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{120530E1-BC52-4D4E-997B-3477964AB544}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{120530E1-BC52-4D4E-997B-3477964AB544}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3A60AFC-181D-4EBA-93B7-67F7587EBA10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3A60AFC-181D-4EBA-93B7-67F7587EBA10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3A60AFC-181D-4EBA-93B7-67F7587EBA10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3A60AFC-181D-4EBA-93B7-67F7587EBA10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

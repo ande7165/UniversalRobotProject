@@ -5,19 +5,14 @@ using Android.Runtime;
 using Android.Widget;
 using Plugin.LocalNotification;
 using NotificationReceiverLibrary;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-using NotificationReceiverLibrary.Interface;
+using URModels;
+using System.Text.Json;
 
 namespace UniversalRobotsApp.ForegroundService
 {
 	[Service]
-	public class NotificationService : Service, IForegroundService, INotificationReceiver
+	public class NotificationService : Service, IForegroundService
 	{
 		public bool ServiceRunning { get; set; }
 		public override IBinder OnBind(Intent intent)
@@ -81,25 +76,30 @@ namespace UniversalRobotsApp.ForegroundService
 		private void RabbitMQReceiver()
 		{
 			Receiver receiver = new Receiver("192.168.1.92");
-			string qname = "";
 
 			receiver.OpenConnection();
 
-			receiver.DeclareExchange("URStatus", ExchangeType.Fanout);
+			receiver.DeclareExchange("NotificationSystem", ExchangeType.Fanout);
 
-			receiver.BindQueue("URStatus", "UR.Robot.Status");
+			string qname = receiver.OpenQueue("");
 
-			qname = receiver.queueNames.First();
+			receiver.BindQueue("NotificationSystem", "UR.Robot.Status.NotificationSys", qname);
 
-			receiver.Receiving(this);
+			receiver.Receiving((string m) => MessageReceiveAction(DeserializeMessage(m)));
 
 			receiver.Consume(qname);
-
 			
 
 		}
 
-		public void MessageReceiveAction(string message)
+		private RobotNotification DeserializeMessage(string message)
+		{
+			RobotNotification robotNotification = JsonSerializer.Deserialize<RobotNotification>(message);
+			
+			return robotNotification;
+		}
+
+		public void MessageReceiveAction(RobotNotification notification)
 		{
 			#region Toast for Testing method
 			//Toast.MakeText(Microsoft.Maui.ApplicationModel.Platform.CurrentActivity, "Stop", ToastLength.Short).Show();
@@ -117,15 +117,17 @@ namespace UniversalRobotsApp.ForegroundService
 			//StartForeground(100, notification);
 			#endregion
 			#region Local Push Notification Library
-			var request = new NotificationRequest
+			if(notification != null)
 			{
-				NotificationId = 1,
-				Title = $"{message}",
-				Subtitle = "Test",
-				Description = "Test Desciption"
-			};
+				var request = new NotificationRequest
+				{
+					NotificationId = 1,
+					Title = $"Robot {notification.RobotId}:{notification.Title}",
+					Description = $"{notification.Message}"
+				};
 
-			LocalNotificationCenter.Current.Show(request);
+				LocalNotificationCenter.Current.Show(request);
+			}
 			#endregion
 		}
 	}
