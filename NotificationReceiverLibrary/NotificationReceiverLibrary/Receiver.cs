@@ -1,4 +1,5 @@
-﻿using RabbitMQ.Client;
+﻿using NotificationReceiverLibrary.Interface;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 
@@ -48,7 +49,7 @@ namespace NotificationReceiverLibrary
 
 			queueNames.Add(queueName);
 		}
-		public void Receiving()
+		public void Receiving(INotificationReceiver receiver)
 		{
 
 			Console.WriteLine(" Wating for message");
@@ -60,8 +61,8 @@ namespace NotificationReceiverLibrary
 			{
 				var body = ea.Body.ToArray();
 				message = Encoding.UTF8.GetString(body);
-				Console.WriteLine(message);
-				
+				receiver.MessageReceiveAction(message);
+
 			};
 		}
 

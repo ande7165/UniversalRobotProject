@@ -11,17 +11,17 @@ string message = "No Message";
 //try
 //{
 	
-	receiver.OpenConnection();
+	//receiver.OpenConnection();
 
-	receiver.DeclareExchange("URStatus", ExchangeType.Fanout);
+	//receiver.DeclareExchange("URStatus", ExchangeType.Fanout);
 
-	receiver.BindQueue("URStatus", "UR.Robot.Status");
+	//receiver.BindQueue("URStatus", "UR.Robot.Status");
 
-	qname = receiver.queueNames.First();
+	//qname = receiver.queueNames.First();
 
-	//while(running)
+	////while(running)
 
-	receiver.Receiving();
+	//receiver.Receiving();
 
 receiver.message = "Test";
 Sender sender = new Sender();
@@ -29,25 +29,34 @@ Sender sender = new Sender();
 sender.OpenConnection();
 sender.OpenQueue("RandomQueue");
 
-if (!string.IsNullOrWhiteSpace(receiver.message))
+while (running)
 {
-	//string? key = console.readkey().tostring();
-	//if (key == "esc")
-	//{
-	//	running = false;
-	//	sender.disposequeue("randomqueue");
-	//	sender.disposechannel();
-	//	sender.disposeconnection();
-	//}
-	//else
-	sender.SendMessage(receiver.message, "UR.Robot.Status.NotficationSys", "SubscriberExchange");
+	Console.WriteLine("Press to run");
+	var key = Console.ReadKey().Key;
+	if(key == ConsoleKey.Enter)
+	{
+		if (!string.IsNullOrWhiteSpace(receiver.message))
+		{
+			//string? key = console.readkey().tostring();
+			//if (key == "esc")
+			//{
+			//	running = false;
+			//	sender.disposequeue("randomqueue");
+			//	sender.disposechannel();
+			//	sender.disposeconnection();
+			//}
+			//else
+			sender.SendMessage(receiver.message, "UR.Robot.Status.NotficationSys", "SubscriberExchange");
+		}
+	}
+
 }
 
 
 
 
 
-receiver.Consume(qname);
+//receiver.Consume(qname);
 
 Console.WriteLine("Something");
 Console.ReadLine();

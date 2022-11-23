@@ -1,4 +1,5 @@
-﻿using UniversalRobotsApp.Pages;
+﻿using UniversalRobotsApp.ForegroundService;
+using UniversalRobotsApp.Pages;
 
 namespace UniversalRobotsApp;
 
@@ -9,6 +10,7 @@ public partial class App : Application
 		InitializeComponent();
 
 		MainPage = new LoginPage();
+
 	}
 
 }
