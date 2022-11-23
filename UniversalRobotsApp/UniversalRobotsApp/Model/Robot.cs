@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using URModels;
 
 namespace UniversalRobotsApp.Model
 {
@@ -15,9 +16,9 @@ namespace UniversalRobotsApp.Model
 		public string Image { get; set; } = "Resources/Images/dotnet_bot.svg";
 		public Status CurrentStatus { get; set; }
 
-		public ObservableCollection<Notification> Notifications { get; } = new ObservableCollection<Notification>();
+		public ObservableCollection<RobotNotification> Notifications { get; } = new ObservableCollection<RobotNotification>();
 
-		public void AddNotification(Notification notification)
+		public void AddNotification(RobotNotification notification)
 		{
 			Notifications.Add(notification);
 

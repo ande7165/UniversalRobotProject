@@ -49,11 +49,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="RabbitMQ\" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+	  <PackageReference Include="Plugin.LocalNotification" Version="10.0.2" />
+	  <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
+	  <ProjectReference Include="..\..\NotificationReceiverLibrary\NotificationReceiverLibrary\NotificationReceiverLibrary.csproj" />
+	  <ProjectReference Include="..\..\URModels\URModels\URModels.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

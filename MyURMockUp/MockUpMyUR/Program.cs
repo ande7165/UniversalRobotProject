@@ -1,35 +1,39 @@
 ﻿using SenderIntegration;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using URModels;
 
 bool running = true;
 Sender sender = new Sender();
 
 sender.OpenConnection();
-sender.OpenQueue("RandomQueue");
+sender.OpenQueue("MyURMock");
 
+RobotNotification notif = new RobotNotification
+{
+	RobotId = "this is id",
+	Title = "Test Notification",
+	Message = "This is a test notification",
+	NotificationStatus = Status.OK,
+	NotificationTimeStamp = DateTime.Now
+};
 
-	
-	//try
-	//{
-		while (running)
-		{
-			string? key = Console.ReadKey().ToString();
-			if (key == "ESC")
-			{
-				running = false;
-				sender.DisposeQueue("RandomQueue");
-				sender.DisposeChannel();
-				sender.DisposeConnection();
-			}
-			else
-				sender.SendMessage("Hello TEST TEST WORLD", "UR.Robot.Status", "URStatus");
-		}
-	//}
-	//finally
-	//{
-	//	sender.DisposeQueue("RandomQueue");
-	//	sender.DisposeChannel();
-	//	sender.DisposeConnection();
-	//}
+string message = JsonSerializer.Serialize(notif);
+
+while (running)
+{
+	Console.WriteLine("Press Enter to send or escape to exit");
+	string? key = Console.ReadKey().ToString();
+	if (key == "ESC")
+	{
+		running = false;
+		sender.DisposeQueue("MyURMock");
+		sender.DisposeChannel();
+		sender.DisposeConnection();
+	}
+	else
+		sender.SendMessage(message, "UR.Robot.Status", "URStatus");
+}
 
 
 

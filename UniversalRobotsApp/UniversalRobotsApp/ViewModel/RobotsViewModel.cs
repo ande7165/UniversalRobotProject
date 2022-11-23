@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UniversalRobotsApp.Model;
+using URModels;
 
 namespace UniversalRobotsApp.ViewModel
 {
@@ -19,13 +20,9 @@ namespace UniversalRobotsApp.ViewModel
 			DataDumping();
 		}
 
-		//public string ColorConvertion(Status robotStatus)
-		//{
-		//}
-
 		private void DataDumping()
 		{
-			if(RobotsList != null && RobotsList.Count > 0)
+			if (RobotsList != null && RobotsList.Count > 0)
 				RobotsList.Clear();
 
 			var ran = new Random();
@@ -36,7 +33,7 @@ namespace UniversalRobotsApp.ViewModel
 				for (int y = 0; y < 3; y++)
 				{
 					int randomint = ran.Next(2);
-					var notification = new Notification
+					var notification = new RobotNotification
 					{
 						Message = $"Message Test {y}",
 						Title = $"Robot is in \" {(Status)randomint} \" condition",

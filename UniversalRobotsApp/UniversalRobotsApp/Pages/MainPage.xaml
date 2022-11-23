@@ -5,8 +5,11 @@
              Title="MainPage">
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to .NET MAUI! 1"
+            Text="UR Notification system app (prototype)"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+		<!--<Button Text="Start Service" Clicked="StartService"/>
+		<Button Text="End Service" Clicked="EndService"/>-->
+	</VerticalStackLayout>
 </ContentPage>

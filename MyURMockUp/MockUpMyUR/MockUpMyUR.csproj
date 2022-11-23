@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\NotificationReceiverLibrary\SenderIntegration\SenderIntegration.csproj" />
+    <ProjectReference Include="..\..\URModels\URModels\URModels.csproj" />
   </ItemGroup>
 
 </Project>

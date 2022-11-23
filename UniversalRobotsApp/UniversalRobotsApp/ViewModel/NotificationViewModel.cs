@@ -1,11 +1,12 @@
 ﻿using UniversalRobotsApp.Model;
+using URModels;
 
 namespace UniversalRobotsApp.ViewModel
 {
 	public class NotificationViewModel
 	{
-		public Notification SelectedNotification { get; set; }
-		public NotificationViewModel(Notification selectedNotification)
+		public RobotNotification SelectedNotification { get; set; }
+		public NotificationViewModel(RobotNotification selectedNotification)
 		{
 			SelectedNotification = selectedNotification;
 		}

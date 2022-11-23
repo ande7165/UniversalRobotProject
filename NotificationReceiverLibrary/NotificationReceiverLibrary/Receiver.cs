@@ -1,4 +1,5 @@
-﻿using RabbitMQ.Client;
+﻿using NotificationReceiverLibrary.Interface;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 
@@ -24,45 +25,64 @@ namespace NotificationReceiverLibrary
 			channel = connection.CreateModel();
 		}
 
-		public void OpenQueue(string queueName, bool durable = true, bool exclusive = false, bool autoDelete = false, IDictionary<string, object> arguments = null)
+		public string OpenQueue(string queueName, bool durable = true, bool exclusive = false, bool autoDelete = false, IDictionary<string, object> arguments = null)
 		{
 			if (factory == null || connection == null || channel == null)
-				return;
+				throw new NullReferenceException("Factory, channel or connection are null");
 
-			channel.QueueDeclare(queue: queueName,
-								durable: durable,
-								exclusive: exclusive,
-								autoDelete: autoDelete,
-								arguments: arguments);
+			if (string.IsNullOrEmpty(queueName))
+			{
+				queueName = channel.QueueDeclare().QueueName;
+			}
+			else
+			{
+				channel.QueueDeclare(queue: queueName,
+					durable: durable,
+					exclusive: exclusive,
+					autoDelete: autoDelete,
+					arguments: arguments);
+			}
+
+			return queueName;
 		}
 		public void DeclareExchange(string exchange, string exchangeType)
 		{
 			channel.ExchangeDeclare(exchange: exchange, type: exchangeType);
 		}
-		public void BindQueue(string exchange, string routingKey)
+		public void BindQueue(string exchange, string routingKey, string queue)
 		{
-			string queueName = channel.QueueDeclare().QueueName;
+
+			string queueName = queue;//channel.QueueDeclare().QueueName;
 			channel.QueueBind(queue: queueName,
 							  exchange: exchange,
 							  routingKey: routingKey);
 
 			queueNames.Add(queueName);
 		}
-		public void Receiving()
+		/// <summary>
+		/// Receive message sent by rabbitmq
+		/// </summary>
+		/// <param name="action">delegate that executes with the message as parameter, here you can do whatever you deem necessary</param>
+		/// <returns>bool to confirm whether it received or not</returns>
+		public bool Receiving(Action<string> action)
 		{
 
 			Console.WriteLine(" Wating for message");
 
 			consumer = new EventingBasicConsumer(channel);
 
+			bool received = false;
 
 			consumer.Received += (model, ea) =>
 			{
 				var body = ea.Body.ToArray();
 				message = Encoding.UTF8.GetString(body);
-				Console.WriteLine(message);
-				
+				action(message);
+
+				received = true;
 			};
+
+			return received;
 		}
 
 		public void Consume(string queueName, bool autoAck = true)

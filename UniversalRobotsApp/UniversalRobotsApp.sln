@@ -5,6 +5,10 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalRobotsApp", "UniversalRobotsApp\UniversalRobotsApp.csproj", "{C6B8C4B4-DAE1-4A4F-ADE4-D511FBEDF9B5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationReceiverLibrary", "..\NotificationReceiverLibrary\NotificationReceiverLibrary\NotificationReceiverLibrary.csproj", "{9966FB0C-019A-4FB8-8F8E-0FDD01B80CEA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "URModels", "..\URModels\URModels\URModels.csproj", "{F6BBBC43-A838-4689-9F2D-C2F324E0A53E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +21,14 @@ Global
 		{C6B8C4B4-DAE1-4A4F-ADE4-D511FBEDF9B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6B8C4B4-DAE1-4A4F-ADE4-D511FBEDF9B5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C6B8C4B4-DAE1-4A4F-ADE4-D511FBEDF9B5}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{9966FB0C-019A-4FB8-8F8E-0FDD01B80CEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9966FB0C-019A-4FB8-8F8E-0FDD01B80CEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9966FB0C-019A-4FB8-8F8E-0FDD01B80CEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9966FB0C-019A-4FB8-8F8E-0FDD01B80CEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6BBBC43-A838-4689-9F2D-C2F324E0A53E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6BBBC43-A838-4689-9F2D-C2F324E0A53E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6BBBC43-A838-4689-9F2D-C2F324E0A53E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6BBBC43-A838-4689-9F2D-C2F324E0A53E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

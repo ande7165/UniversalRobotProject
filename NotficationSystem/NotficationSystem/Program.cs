@@ -6,69 +6,56 @@ using System.Text;
 
 bool running = true;
 Receiver receiver = new Receiver();
-string qname = "";
-string message = "No Message";
-//try
-//{
-	
-	receiver.OpenConnection();
-
-	receiver.DeclareExchange("URStatus", ExchangeType.Fanout);
-
-	receiver.BindQueue("URStatus", "UR.Robot.Status");
-
-	qname = receiver.queueNames.First();
-
-	//while(running)
-
-	receiver.Receiving();
-
-receiver.message = "Test";
 Sender sender = new Sender();
 
+string qname = "MyURMock";
+
+receiver.OpenConnection();
 sender.OpenConnection();
-sender.OpenQueue("RandomQueue");
 
-if (!string.IsNullOrWhiteSpace(receiver.message))
-{
-	//string? key = console.readkey().tostring();
-	//if (key == "esc")
-	//{
-	//	running = false;
-	//	sender.disposequeue("randomqueue");
-	//	sender.disposechannel();
-	//	sender.disposeconnection();
-	//}
-	//else
-	sender.SendMessage(receiver.message, "UR.Robot.Status.NotficationSys", "SubscriberExchange");
-}
+receiver.OpenQueue(qname);
+
+sender.DeclareExchange("NotificationSystem", ExchangeType.Fanout);
+
+receiver.DeclareExchange("URStatus", ExchangeType.Topic);
+
+receiver.BindQueue("URStatus", "UR.Robot.Status", qname);
+
+bool received = receiver.Receiving((string m) => { Console.WriteLine(m); sender.SendMessage(m, "UR.Robot.Status.NotificationSys", "NotificationSystem"); });
+
+receiver.Consume(qname, false);
 
 
 
+//sender.OpenConnection();
 
 
-receiver.Consume(qname);
 
-Console.WriteLine("Something");
+//while (running)
+//{
+//	//Console.WriteLine("Press to Exit");
+//	//var key = Console.ReadKey().Key;
+//	//if(key != ConsoleKey.Escape)
+//	//{
+//		if (received)
+//		{
+//			
+//			received = false;
+//		}
+//	//}
+//	//else
+//	//{
+//	//	running = false;
+//	//	sender.DisposeQueue("randomqueue");
+//	//	sender.DisposeChannel();
+//	//	sender.DisposeConnection();
+//	//}
+
+//}
+
+Console.WriteLine("Exited");
 Console.ReadLine();
 
-
-//}
-//finally
-//{
-//	receiver.DisposeQueue(qname);
-//	receiver.DisposeChannel();
-//	receiver.DisposeExchange();
-//	receiver.DisposeConnection();
-//}
-
-
-
-
-//while (!running)
-//{
-
-//}
 
 
 

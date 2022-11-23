@@ -35,12 +35,24 @@ namespace SenderIntegration
 								arguments: arguments);
 
 		}
-
-		public void SendMessage(string message, string routingKey, string exchange, IBasicProperties basicProperties = null)
+		public void DeclareExchange(string exchange, string exchangeType)
+		{
+			channel.ExchangeDeclare(exchange: exchange, type: exchangeType);
+		}
+		/// <summary>
+		/// Send message via rabbbitmq
+		/// </summary>
+		/// <param name="message">String message, can be normal string or serialized json</param>
+		/// <param name="routingKey"></param>
+		/// <param name="exchange"></param>
+		/// <param name="basicProperties"></param>
+		/// <returns>bool to confirm if it got sent or not</returns>
+		public bool SendMessage(string message, string routingKey, string exchange, IBasicProperties basicProperties = null)
 		{
 			if (factory == null || connection == null || channel == null)
-				return;
-
+				return false;
+			if (message == null)
+				return false;
 			var messageBody = Encoding.UTF8.GetBytes(message);
 
 			channel.BasicPublish(exchange: exchange,
@@ -48,7 +60,8 @@ namespace SenderIntegration
 				basicProperties: basicProperties,
 				body: messageBody);
 
-			Console.WriteLine("Message[{0}] Sent", message);
+			//Console.WriteLine("Message[{0}] Sent", message);
+			return true;
 		}
 
 		public void DisposeConnection()

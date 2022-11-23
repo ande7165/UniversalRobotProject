@@ -1,4 +1,5 @@
 using UniversalRobotsApp.ViewModel;
+using URModels;
 
 namespace UniversalRobotsApp.Pages;
 
@@ -13,9 +14,9 @@ public partial class Robot : ContentPage
 	{
 		if (args.SelectedItem != null)
 		{
-			var vm = new NotificationViewModel((Model.Notification)args.SelectedItem);
+			var vm = new NotificationViewModel((RobotNotification)args.SelectedItem);
 
-			await Navigation.PushModalAsync(new Pages.NotificationPage { BindingContext = vm});
+			await Navigation.PushModalAsync(new Pages.NotificationPage { BindingContext = vm });
 
 			NotificationsList.SelectedItem = null;
 		}
